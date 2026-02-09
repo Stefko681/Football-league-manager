@@ -1,0 +1,5 @@
+4 4
+Arsenal|2 1 1 0 5 2 3 4
+Liverpool|2 1 1 0 3 0 3 4
+Man City|2 0 1 1 2 5 -3 1
+Chelsea|2 0 1 1 0 3 -3 1
