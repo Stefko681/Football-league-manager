@@ -214,31 +214,30 @@ void viewStandings(team *&teams, const int &teamCount) {
     std::cout << "| MP | W | D | L | GF | GA | GD  | Pts" << std::endl;
     std::cout << "------------------------------------------------------------------" << std::endl;
     for (int i = 0; i < teamCount; ++i) {
-        int currMaxPoints = teams[i].points;
         for (int j = i + 1; j < teamCount; ++j) {
-            if (teams[j].points > currMaxPoints) {
+            if (teams[j].points > teams[i].points) {
                 team tempTeam1 = teams[i];
                 teams[i] = teams[j];
                 teams[j] = tempTeam1;
-                if (teams[j].points == currMaxPoints) {
-                    if (teams[j].goalDiff > teams[i].goalDiff) {
-                        team tempTeam2 = teams[i];
+            } else if (teams[j].points == teams[i].points) {
+                if (teams[j].goalDiff > teams[i].goalDiff) {
+                    team tempTeam2 = teams[i];
+                    teams[i] = teams[j];
+                    teams[j] = tempTeam2;
+                } else if (teams[j].goalDiff == teams[i].goalDiff) {
+                    if (teams[j].goalsFor > teams[i].goalsFor) {
+                        team tempTeam3 = teams[i];
                         teams[i] = teams[j];
-                        teams[j] = tempTeam2;
-                    }
-                    if (teams[j].goalDiff == teams[i].goalDiff) {
-                        if (teams[j].goalsFor > teams[i].goalsFor) {
-                            team tempTeam3 = teams[i];
-                            teams[i] = teams[j];
-                            teams[j] = tempTeam3;
-                        }
+                        teams[j] = tempTeam3;
                     }
                 }
             }
         }
         std::cout << i + 1 << ". | " << teams[i].name;
         printNSpaces(21 - strLen(teams[i].name));
-        std::cout << "  | " << teams[i].gamesPlayed;printSpaceForSmallNums(teams[i].gamesPlayed);std::cout << " | " << teams[i].wins <<
+        std::cout << "  | " << teams[i].gamesPlayed;
+        printSpaceForSmallNums(teams[i].gamesPlayed);
+        std::cout << " | " << teams[i].wins <<
                 " | " <<
                 teams[i].draws << " | " << teams[i].loses << " | " << teams[i].goalsFor << "  | " << teams[i].
                 goalsAgainst << "  | ";
@@ -331,7 +330,7 @@ void deleteTeam(team *&teams, int &teamsCount) {
 }
 
 
-void exit(team *&teams, const int &teamsCount, const int &capacity) {
+void saveAndExit(team *&teams, const int &teamsCount, const int &capacity) {
     std::ofstream out = createFile();
     if (!out.is_open()) {
         std::cout << ">> Error saving to file!" << std::endl;
@@ -371,7 +370,7 @@ void mainLoop() {
                 break;
             case 6: deleteTeam(teams, teamCount);
                 break;
-            case 7: exit(teams, teamCount, capacity);
+            case 7: saveAndExit(teams, teamCount, capacity);
                 break;
             default: std::cout << ">> Invalid Option!" << std::endl;
                 break;

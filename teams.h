@@ -47,7 +47,7 @@ void editTeamName(team *&teams, const int &teamsCount);
 
 void deleteTeam(team *&teams, int &teamsCount);
 
-void exit(team *&teams, const int &teamsCount, const int &capacity);
+void saveAndExit(team *&teams, const int &teamsCount, const int &capacity);
 
 void mainLoop();
 #endif //FOOTBALL_LEAGUE_MANAGER_TEAMS_H
