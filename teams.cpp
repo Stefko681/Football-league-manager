@@ -125,6 +125,21 @@ void setStatsNull(team *&teams, const int &teamCount) {
     }
 }
 
+int readInt() {
+    int input;
+    while (true) {
+        std::cin >> input;
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(BUFFER, '\n');
+            std::cout << ">> Invalid option! Please enter a number: ";
+        } else {
+            std::cin.ignore(BUFFER, '\n');
+            return input;
+        }
+    }
+}
+
 void addTeam(team *&teams, int &teamCount, int &capacity) {
     if (teamCount >= capacity) {
         capacity *= 2;
@@ -137,7 +152,6 @@ void addTeam(team *&teams, int &teamCount, int &capacity) {
     }
     std::cout << ">> Enter team name:";
     char buffer[BUFFER];
-    std::cin.ignore();
     std::cin.getline(buffer, BUFFER);
     teams[teamCount].name = new char[strLen((buffer)) + 1];
     strCopy(buffer, teams[teamCount].name);
@@ -153,16 +167,15 @@ void recordMatchResult(team *&teams, const int &teamCount) {
     std::cout << ">> Enter home team:";
     char team1[BUFFER];
     char team2[BUFFER];
-    std::cin.ignore();
     std::cin.getline(team1, BUFFER);
     std::cout << ">> Enter away team:";
     std::cin.getline(team2, BUFFER);
     std::cout << ">> Enter home goals:";
     int hG = 0;
     int aG = 0;
-    std::cin >> hG;
+    hG = readInt();
     std::cout << ">> Enter away goals:";
-    std::cin >> aG;
+    aG = readInt();
     int indexHome = -1;
     int indexAway = -1;
     for (int i = 0; i < teamCount; ++i) {
@@ -249,7 +262,6 @@ void viewStandings(team *&teams, const int &teamCount) {
 void teamStats(team *&teams, const int &teamsCount) {
     std::cout << ">> Enter team name:";
     char buffer[BUFFER];
-    std::cin.ignore();
     std::cin.getline(buffer, BUFFER);
     int index = -1;
     for (int i = 0; i < teamsCount; ++i) {
@@ -275,7 +287,6 @@ void teamStats(team *&teams, const int &teamsCount) {
 void editTeamName(team *&teams, const int &teamsCount) {
     std::cout << ">> Enter current team name: ";
     char buffer[BUFFER];
-    std::cin.ignore();
     std::cin.getline(buffer, BUFFER);
     int searchedIndex = -1;
     for (int i = 0; i < teamsCount; ++i) {
@@ -299,7 +310,6 @@ void editTeamName(team *&teams, const int &teamsCount) {
 void deleteTeam(team *&teams, int &teamsCount) {
     std::cout << ">> Enter team name: ";
     char buffer[BUFFER];
-    std::cin.ignore();
     std::cin.getline(buffer, BUFFER);
     int searchedIndex = -1;
     for (int i = 0; i < teamsCount; ++i) {
@@ -356,7 +366,7 @@ void mainLoop() {
     int menuOption;
     do {
         printMenu();
-        std::cin >> menuOption;
+        menuOption =readInt();
         switch (menuOption) {
             case 1: addTeam(teams, teamCount, capacity);
                 break;
