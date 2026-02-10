@@ -35,6 +35,8 @@ void printMenu();
 
 void setStatsNull(team *&teams, const int &teamCount);
 
+int readInt();
+
 void addTeam(team *&teams, int &teamCount, int &capacity);
 
 void recordMatchResult(team *&teams, const int &teamCount);
